@@ -1,0 +1,14 @@
+Lorentzian Causal Diamond Verification Scripts
+
+This software implements and verifies the novel geometric and algebraic 
+concepts presented in the paper:
+> Yannick Schmitt. (2026). EMA-Gated Temporal Sequence Compression in Vision Transformers. Zenodo. https://doi.org/10.5281/zenodo.19338306
+
+Specifically, this includes the numerical verification of:
+- The ternary Minkowski lattice L and lightlike vector enumeration.
+- The 21 order-4 plaquette structure and incidence matrix.
+- The exact integer spectrum of the 12x12 Plaquette Laplacian.
+- The leading-order partition function and specific-heat peak (beta_c ≈ 2.7364).
+
+If you use this code or the implemented algorithms in your research, 
+please cite the paper mentioned above.

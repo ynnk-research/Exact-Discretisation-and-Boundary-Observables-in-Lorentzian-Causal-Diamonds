@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+authors:
+  - family-names: Schmitt
+    given-names: Yannick
+    orcid: https://orcid.org/0009-0002-0308-9082
+title: "Exact Discretisation and Boundary Observables in Lorentzian Causal Diamonds"
+version: 1.0.3
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.19338306
+date-released: 2026-30-03

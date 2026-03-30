@@ -1,0 +1,1012 @@
+% ============================================================
+%  EXACT DISCRETISATION AND BOUNDARY OBSERVABLES
+%  IN LORENTZIAN CAUSAL DIAMONDS  —  v3
+%
+%  Revised following peer review. Changes from v1:
+%  (R1) CD redefined as 2-complex; partial-CD as boundary links
+%  (R2) Boundary sum theorem renamed; Stokes label corrected
+%  (R3) beta/13 labelled [ANSATZ] with justification
+%  (R4) "exact within truncation" language corrected
+%  (R5) Finite-system caveat for crossover added
+%  (R6) All 21 plaquettes listed in Appendix D
+%  (R7) K_bdy written as explicit block matrix
+%  (R8) Flat-connection theorem in Section 5
+%  (R9) CDT comparison remark added
+%  (R10) A_mu constant assumption noted in Theorem 4 proof
+%  (R11) "holographic" justified precisely
+%  Changes from v2:
+%  (R12) Betti-number claim removed; replaced by exact
+%        flat-connection count with gauge-theoretic interpretation
+%  (R13) CW-complex obstruction explained (star-graph 1-skeleton
+%        has no 1-cycles, so plaquettes cannot be attached as
+%        topological 2-cells; Euler characteristic cross-check
+%        13 - 12 + 21 = 22 ≠ 1 - 4 + 13 = 10 confirms this)
+%  (R14) Extended K_{6,6} complex noted for reference
+%  (R15) Abstract, introduction, keywords, discussion updated
+%  (R16) Appendix D plaquettes 20–21 corrected
+%  (R17) K_bdy sign corrected and K_total spectrum updated
+% ============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{cleveref}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage{mathrsfs}
+
+% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{ansatz}[theorem]{Ansatz}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+
+% Macros
+\newcommand{\Lat}{\mathscr{L}}
+\newcommand{\CD}{\mathscr{D}}
+\newcommand{\BdyCD}{\partial\mathscr{D}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\FS}{\mathcal{F}}
+\newcommand{\PS}{\mathcal{P}}
+\newcommand{\Plaq}{\mathcal{Q}}
+\newcommand{\Nloc}{N_{\mathrm{local}}}
+\newcommand{\ssp}{s^2}
+\newcommand{\Cstar}{\beta_c}
+\newcommand{\Kmat}{\mathbf{K}}
+\newcommand{\Mmat}{\mathbf{M}}
+\newcommand{\neff}{n^\mu_{\mathrm{eff}}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\ZBF}{Z_{\mathrm{BF}}}
+
+\definecolor{ansatzblue}{rgb}{0.0,0.25,0.55}
+\newcommand{\ANSATZ}{\textcolor{ansatzblue}{\textbf{[ANSATZ]}}}
+
+\title{\Large\bfseries Exact Discretisation and Boundary Observables\\[4pt]
+       in Lorentzian Causal Diamonds}
+\author{Yannick Schmitt \\ 
+\texttt{ynnk.schmitt@gmail.com} \\
+\vspace{4pt} 
+\href{https://doi.org/10.5281/zenodo.19338306}{DOI: 10.5281/zenodo.19338306}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the ternary Minkowski lattice
+$\Lat = \{-1,0,+1\}^4$ with
+$\eta = \operatorname{diag}(-1,+1,+1,+1)$
+and prove a sequence of exact geometric and algebraic results.
+\textbf{Lemma~\ref{thm:12lightlike}} establishes by exhaustive
+enumeration that $\Lat$ contains exactly twelve lightlike
+nearest-neighbour vectors forming two null sheets of six mutually
+spacelike channels each.
+\textbf{Proposition~\ref{prop:d4}} identifies these twelve vectors
+with the mixed roots of the $D_4$ root system, yielding the exact
+Minkowski partition $24 = 12 + 12$.
+\textbf{Theorem~\ref{thm:diamond}} proves that the causal diamond
+two-complex $\CD$ satisfies five independent geometric conditions;
+its boundary $\BdyCD$ is the twelve-link null set, which spans $\R^4$.
+\textbf{Theorem~\ref{thm:boundary}} evaluates the discrete boundary
+sum of a $U(1)$ gauge field over $\BdyCD$ using the Lorentzian
+oriented chain complex, yielding an effective coupling vector
+$\neff = (12,0,0,0)$ --- purely temporal.
+This is a discrete boundary sum identity; no bulk curvature integral
+is computed.
+The $U(1)$ lattice BF action on the 21 order-four plaquettes of $\CD$
+is constructed with an ansatz boundary coupling at level $\beta/13$.
+A leading-order approximate partition function exhibits a
+finite-system crossover at $\Cstar \approx 2.7364$.
+The plaquette Laplacian has exact integer spectrum
+$\{0^{(4)}, 6^{(2)}, 8^{(3)}, 10^{(2)}, 28^{(1)}\}$;
+its four-dimensional null space is identified with the space of
+flat connections --- link-variable assignments with vanishing
+holonomy on every plaquette.
+All 21 plaquettes and the $12\times12$ Laplacian are given
+explicitly in the appendices.
+\end{abstract}
+
+\tableofcontents
+
+\bigskip\noindent
+\textbf{MSC 2020:} 83C27, 81T25, 52B11, 81Q35.\\[2pt]
+\textbf{Keywords:} ternary Minkowski lattice; causal diamond;
+$D_4$ root system; oriented chain complex; $U(1)$ BF theory;
+plaquette Laplacian; flat connections.
+
+%------------------------------------------------------------------
+\section{Introduction}\label{sec:intro}
+%------------------------------------------------------------------
+
+Discrete models of spacetime have motivated substantial literature
+in mathematical physics, including causal set
+theory~\cite{Bombelli1987,Henson2006}, Regge
+calculus~\cite{Regge1961}, causal dynamical
+triangulations~\cite{Ambjorn2004}, and spin foam
+models~\cite{Perez2013}.
+The present paper investigates a concrete, fully explicit object:
+the ternary Minkowski lattice $\Lat = \{-1,0,+1\}^4$ with
+$\eta = \operatorname{diag}(-1,+1,+1,+1)$.
+This is the smallest four-dimensional lattice closed under the
+two-valued sign map that contains the $D_4$ root system.
+
+All results are confined to this finite object.
+The lattice has $81$ points; all relevant structures are enumerated
+exhaustively; every claimed spectrum is the exact integer eigenvalue
+set of an explicit matrix.
+Five main results are established:
+\begin{enumerate}[label=\textbf{(\roman*)}]
+  \item $(\Lat,\eta)$ contains exactly twelve lightlike
+    nearest-neighbour vectors forming two null sheets
+    (\cref{thm:12lightlike}).
+  \item These twelve vectors are the mixed roots of $D_4$, and
+    $\eta$ partitions all $24$ $D_4$ roots as $12 + 12$
+    (\cref{prop:d4}).
+  \item The twelve vectors form the boundary $\BdyCD$ of a
+    two-complex $\CD$ characterised by five geometric conditions
+    (\cref{thm:diamond}).
+  \item With the Lorentzian time-orientation on the boundary chain
+    complex, the discrete boundary sum of a gauge field over
+    $\BdyCD$ evaluates to $\neff = (12,0,0,0)$
+    (\cref{thm:boundary}).
+  \item The $U(1)$ lattice BF theory on the 21 plaquettes of $\CD$
+    has an approximate partition function with finite-system
+    crossover $\Cstar \approx 2.7364$, an exact plaquette
+    Laplacian with integer spectrum $\{0^4, 6^2, 8^3, 10^2, 28\}$,
+    and a four-dimensional space of flat connections
+    (\cref{sec:BF}).
+\end{enumerate}
+
+No cosmological, phenomenological, or continuum field-theory claims
+are made.
+The crossover $\Cstar$ is a feature of a 12-link finite system, not
+a thermodynamic phase transition.
+The term \emph{discrete causal diamond} is used for a finite
+combinatorial object satisfying Definition~\ref{def:diamond};
+\emph{boundary-spanning} refers to the $\R^4$ spanning condition
+(condition~(d) of that definition), not to a dynamical
+bulk-boundary duality.
+
+The paper is organised as follows.
+\Cref{sec:lattice} proves results (i)--(ii).
+\Cref{sec:diamond} defines $\CD$ and proves (iii).
+\Cref{sec:boundary} establishes (iv).
+\Cref{sec:plaquettes} enumerates the plaquette structure and
+computes the flat-connection space.
+\Cref{sec:BF} constructs the $U(1)$ BF theory and derives (v).
+\Cref{sec:discussion} lists open problems.
+
+%------------------------------------------------------------------
+\section{The Ternary Minkowski Lattice}\label{sec:lattice}
+%------------------------------------------------------------------
+
+\begin{definition}[Ternary Minkowski Lattice]\label{def:lattice}
+The \emph{ternary Minkowski lattice} is
+$\Lat = \{-1,0,+1\}^4 \subset \R^4$
+with Minkowski inner product
+$\eta(u,v) = -u_0 v_0 + u_1 v_1 + u_2 v_2 + u_3 v_3$,
+where $u_0$ is the time component and lattice spacing $a=1$.
+The Minkowski norm squared of $v \in \Lat$ is $\ssp(v) = \eta(v,v)$.
+\end{definition}
+
+\begin{notation}
+Write $\Lat^* = \Lat\setminus\{0\}$ for the $80$ non-origin
+lattice points, classified as
+\emph{lightlike} ($\ssp = 0$),
+\emph{spacelike} ($\ssp > 0$), or
+\emph{timelike} ($\ssp < 0$).
+\end{notation}
+
+\begin{lemma}[Twelve Lightlike Nearest Neighbours]\label{thm:12lightlike}
+The lattice $(\Lat,\eta)$ contains exactly twelve lightlike
+non-origin vectors:
+\[
+  \LL = \bigl\{(\pm1,\,\sigma_j\bm{e}_j)
+    : j\in\{1,2,3\},\;\sigma_j\in\{-1,+1\}\bigr\}.
+\]
+The partition of $\Lat^*$ is
+$80 = 12_{\ssp=0} + 66_{\ssp>0} + 2_{\ssp<0}$.
+\end{lemma}
+
+\begin{proof}
+The condition $\ssp(v) = -t^2 + x_1^2+x_2^2+x_3^2 = 0$
+with $t, x_j \in \{-1,0,1\}$ and $v \neq 0$
+requires $t \neq 0$ (else all $x_j = 0$), so $t^2 = 1$,
+forcing exactly one $x_j = \pm 1$:
+$2 \times 3 \times 2 = 12$ solutions.
+The two purely timelike vectors $(\pm1,0,0,0)$ give $\ssp = -1$;
+the remaining $80 - 12 - 2 = 66$ are spacelike.
+All 80 vectors are listed in Appendix~\ref{app:enum}.
+\qed
+\end{proof}
+
+\subsection{Connection to the \texorpdfstring{$D_4$}{D4} Root System}
+
+\begin{definition}[$D_4$ Root System]\label{def:d4}
+The $D_4$ root system is
+$\Phi(D_4) = \{v\in\Z^4 : |v|^2_\mathrm{Eucl}=2\}$,
+consisting of all permutations of $(\pm1,\pm1,0,0)$;
+$|\Phi(D_4)| = 24$.
+\end{definition}
+
+\begin{proposition}[$D_4$ Root Splitting]\label{prop:d4}
+The Minkowski metric $\eta$ partitions $\Phi(D_4)$ as
+$24 = 12_\mathrm{lightlike} + 12_\mathrm{spacelike}$.
+The 12 lightlike $D_4$ roots coincide exactly with $\LL$.
+\end{proposition}
+
+\begin{proof}
+A root with $v_0=\pm1$ and exactly one spatial $v_j=\pm1$
+satisfies $\ssp=-1+1=0$ (lightlike): $2\times3\times2=12$.
+A root with $v_0=0$ and two spatial components satisfies
+$\ssp=2>0$ (spacelike): $\binom{3}{2}\cdot4=12$.
+No $D_4$ root is timelike under $\eta$.
+\qed
+\end{proof}
+
+\begin{remark}[$B_4$ vs.\ $\mathrm{SO}(3,1)$]\label{rem:b4symmetry}
+The automorphism group of $\Lat$ as a pointed set is the
+hyperoctahedral group $B_4$ (order $384$): all permutations
+and sign flips of coordinates.
+The Lorentz group $\mathrm{SO}(3,1)$ acts on the ambient
+Minkowski space $\R^4$, not on the finite lattice points.
+Whether $B_4$ invariance implies infrared $\mathrm{SO}(3,1)$
+emergence is Open Problem~O4 below.
+\end{remark}
+
+%------------------------------------------------------------------
+\section{The Discrete Causal Diamond}\label{sec:diamond}
+%------------------------------------------------------------------
+
+We define the causal diamond as a \emph{two-complex}
+$\CD$ whose boundary $\BdyCD$ is the set of lightlike links.
+This distinction between the complex $\CD$ and its boundary
+$\BdyCD$ is essential for the boundary integration in \cref{sec:boundary}.
+
+\begin{definition}[Discrete Causal Diamond 2-Complex]\label{def:diamond}
+A \emph{discrete causal diamond} in $(\Lat,\eta)$ is a finite
+two-complex $\CD$ whose:
+\begin{itemize}[noitemsep]
+  \item \emph{0-cells}: the origin $\bm{0}$ and the twelve points of $\LL$;
+  \item \emph{1-cells}: the twelve null links $\{[\bm{0},L]:L\in\LL\}$;
+  \item \emph{2-cells}: the twenty-one order-four closed loops
+    (see \cref{sec:plaquettes}).
+\end{itemize}
+The \emph{boundary} $\BdyCD$ decomposes as
+$\BdyCD = \FS \cup \PS$, where
+\begin{align*}
+  \FS &= \{L\in\LL : L_0=+1\}, \quad |\FS|=6,\\
+  \PS &= \{L\in\LL : L_0=-1\}, \quad |\PS|=6.
+\end{align*}
+The complex $\CD$ is a \emph{boundary-spanning causal diamond}
+when $\BdyCD$ satisfies:
+\begin{enumerate}[label=(\alph*), noitemsep]
+  \item\label{def:a} All boundary links are lightlike.
+  \item\label{def:b} Any two distinct links within $\FS$ (or
+    both in $\PS$) are spacelike-separated.
+  \item\label{def:c} $\FS\cap\PS = \emptyset$.
+  \item\label{def:d} $\FS\cup\PS$ spans $\R^4$.
+  \item\label{def:e} For each $L_f\in\FS$ there is a unique
+    $-L_f\in\PS$ (antipodal pairing).
+\end{enumerate}
+The qualifier \emph{boundary-spanning} refers to condition~\ref{def:d}:
+all directional information about $\R^4$ is encoded on the
+twelve boundary null links, in the sense that any vector in
+$\R^4$ is a linear combination of elements of $\BdyCD$.
+No dynamical bulk-boundary duality of the AdS/CFT type is implied.
+\end{definition}
+
+\begin{theorem}[Causal Diamond Boundary]\label{thm:diamond}
+The two-complex $\CD$ built on $\LL$ is a boundary-spanning causal
+diamond: its boundary $\BdyCD = \FS\cup\PS$ satisfies all
+five conditions~\ref{def:a}--\ref{def:e}.
+\end{theorem}
+
+\begin{proof}
+Condition~\ref{def:a} follows from \cref{thm:12lightlike}.
+Condition~\ref{def:b}: for distinct $u,v\in\FS$,
+$(u-v)_0=0$ and at least one spatial component differs, so
+$\ssp(u-v) = \sum_j(u_j-v_j)^2 \geq 2 > 0$;
+all $\binom{6}{2}=15$ pairs are verified spacelike
+in Appendix~\ref{app:pairwise}.
+Condition~\ref{def:c}: by definition.
+Condition~\ref{def:d}: four linearly independent vectors in $\FS$
+are exhibited in Appendix~\ref{app:span}.
+Condition~\ref{def:e}: the map $L_f\mapsto -L_f$ is a bijection
+$\FS\to\PS$.
+\qed
+\end{proof}
+
+\begin{remark}[Causal Channel Count]\label{rem:bandwidth}
+Under the causal-set axiom that information propagates only along
+lightlike vectors~\cite{Bombelli1987,Henson2006}, the maximum
+number of distinct causal channels available to an observer at the
+origin is $\Nloc = |\FS| + |\PS| = 12$.
+This count follows from Theorem~\ref{thm:diamond} together with the
+stated axiom; it is not a theorem of the present paper.
+\end{remark}
+
+\begin{remark}[Kissing Number Coincidence]\label{rem:kissing}
+$\Nloc = 12$ coincides numerically with the three-dimensional
+Euclidean kissing number $k_3=12$~\cite{SchuetteMaass1953},
+but the derivation here uses the Minkowski causal structure of
+$\Lat$, not Euclidean sphere packing.
+The structural reason for the coincidence is as follows.
+The 12 lightlike vectors in $\LL$ are exactly the mixed roots of
+$D_4$ (\cref{prop:d4}).
+The $D_4$ root system contains the $D_3$ root system as a
+sub-lattice; $D_3$ is the face-centred cubic (FCC) lattice, whose
+kissing number is 12.
+The Minkowski metric $\eta$ selects the $2\times6$ mixed roots of
+$D_4$ (one time component, one spatial component each) out of the
+full 24-root system, and their count equals $k_3$ by this embedding.
+The coincidence does not persist in other spacetime signatures.
+\end{remark}
+
+%------------------------------------------------------------------
+\section{Lorentzian Boundary Integration}\label{sec:boundary}
+%------------------------------------------------------------------
+
+\begin{definition}[Lorentzian Oriented Chain Complex]\label{def:chain}
+The oriented chain complex on $(\CD,\BdyCD)$ assigns:
+future links $L_f\in\FS$ the orientation $[\bm{0}\to L_f]$
+(outgoing);
+past links $L_p\in\PS$ the orientation $[L_p\to\bm{0}]$
+(incoming).
+Past links are incoming because the past null cone
+\emph{converges} on the observer at the origin in Lorentzian
+geometry, following the standard orientation for causal
+boundaries~\cite{Penrose1972, WaldGR}.
+Under the Riemannian convention (all links outgoing),
+the boundary sum vanishes identically; the Lorentzian
+convention is what produces a non-trivial result.
+\end{definition}
+
+\begin{theorem}[Lorentzian Boundary Coupling]\label{thm:boundary}
+Let $A = A_\mu\,\mathrm{d}x^\mu$ be a $U(1)$ gauge field,
+assumed constant at the scale of the causal diamond
+(lattice-spacing corrections are of order $(a/\lambda)^2$
+for wavelength $\lambda\gg a$).
+The discrete boundary sum over $\BdyCD$ with orientations
+from Definition~\ref{def:chain} is
+\[
+  \sum_{L\in\BdyCD} \int_L A
+  \;=\; A_\mu\,\neff{}^\mu,
+  \qquad \neff = (12,\,0,\,0,\,0).
+\]
+The spatial components vanish by the six-fold rotational symmetry
+of $\FS$; the temporal component equals $12$.
+\end{theorem}
+
+\begin{proof}
+Under the constant-field assumption, each future link
+$[\bm{0}\to L_f]$ contributes $A_\mu L_f^\mu$, and each
+past link $[L_p\to\bm{0}]$ contributes $A_\mu(\bm{0}-L_p)^\mu
+= -A_\mu L_p^\mu$.
+Since $L_p = -L_f$ for each antipodal pair:
+\[
+  \sum_{L\in\BdyCD}\int_L A
+  = \sum_{L_f\in\FS} A_\mu L_f^\mu
+  + \sum_{L_p\in\PS}(-A_\mu L_p^\mu)
+  = 2\sum_{L_f\in\FS} A_\mu L_f^\mu.
+\]
+Time component ($\mu=0$): all six $L_f$ have $L_f^0=+1$,
+so $2\sum_f L_f^0 = 12$.
+Spatial component ($\mu=j$): $\FS$ contains both
+$(1,+1,0,0)$ and $(1,-1,0,0)$, and analogously for $j=2,3$,
+so $\sum_f L_f^j = 0$.
+\qed
+\end{proof}
+
+\begin{remark}[Discrete Boundary Sum, Not Stokes Theorem]\label{rem:stokes}
+Theorem~\ref{thm:boundary} is a result about the
+\emph{discrete oriented boundary sum}
+$\sum_{L\in\BdyCD}\int_L A$.
+It is not an application of the classical Stokes theorem
+$\int_\Omega d\omega = \int_{\partial\Omega}\omega$,
+which would require evaluating a bulk curvature integral
+$\int_\Omega dA$ over the diamond volume.
+No bulk field-strength integral is computed here; the result
+is driven entirely by the Lorentzian orientation convention
+and the antipodal symmetry of $\BdyCD$.
+\end{remark}
+
+\begin{corollary}[Purely Temporal Boundary Source]\label{cor:temporal}
+Any action $S_\mathrm{bdy} \propto \sum_{L\in\BdyCD}\int_L A$
+derived from the Lorentzian boundary sum generates source terms
+only in the time-component equation of motion.
+Spatial equations of motion are unaffected.
+\end{corollary}
+
+%------------------------------------------------------------------
+\section{Plaquette Structure and Algebraic Invariants}\label{sec:plaquettes}
+%------------------------------------------------------------------
+
+An \emph{order-$k$ plaquette} is a $k$-element subset of $\LL$
+whose vector sum is $\bm{0}$.
+
+\begin{proposition}[Plaquette Enumeration]\label{prop:plaquettes}
+\begin{enumerate}[label=(\roman*), noitemsep]
+  \item There are no order-3 plaquettes.
+  \item There are exactly 21 order-4 plaquettes, all of type
+    $2\FS+2\PS$.
+  \item There are six order-2 antipodal pairs
+    $\{L_f,-L_f\}$ for $L_f\in\FS$.
+\end{enumerate}
+All 21 quadrilateral plaquettes are listed explicitly in
+Appendix~\ref{app:plaquettes}.
+\end{proposition}
+
+\begin{proof}
+Order-3: any three lightlike vectors have time components
+summing to a value in $\{-3,-1,+1,+3\}$, never zero.
+Order-4: a zero-sum quadruple requires time components to cancel,
+forcing $n_+=n_-=2$ (type $2\FS+2\PS$).
+Enumeration of all $\binom{12}{4}=495$ quadruples yields exactly
+$21$ satisfying this condition; the full list is in
+Appendix~\ref{app:plaquettes}.
+\qed
+\end{proof}
+
+\begin{remark}[Comparison with CDT]\label{rem:cdt}
+Causal dynamical triangulations~\cite{Ambjorn2004} use
+triangular simplices (order-3) as fundamental cells.
+The absence of order-3 plaquettes in $\CD$ follows directly
+from the time-component constraint: a closed triangle on the
+causal boundary cannot balance its time components.
+The ternary lattice therefore selects order-4 squares as its
+minimal closed loops, connecting naturally to Wilson-loop
+lattice gauge theory~\cite{Wilson1974} rather than to
+simplicial Regge calculus~\cite{Regge1961}.
+\end{remark}
+
+\subsection{Incidence Matrix and Plaquette Laplacian}
+
+\begin{definition}[Incidence Matrix and Laplacian]\label{def:laplacian}
+Index the twelve links $l=0,\ldots,11$ and the twenty-one
+plaquettes $p=0,\ldots,20$.
+The \emph{incidence matrix} $\Mmat\in\{0,1\}^{12\times21}$
+has $\Mmat_{lp}=1$ iff link $l$ belongs to plaquette $p$.
+Each column of $\Mmat$ has exactly four nonzero entries.
+The \emph{plaquette Laplacian} is
+$\Kmat = \Mmat\Mmat^\top \in\Z^{12\times12}$.
+\end{definition}
+
+\begin{proposition}[Plaquette Laplacian Spectrum]\label{prop:spectrum}
+The plaquette Laplacian $\Kmat$ has exact integer spectrum
+\[
+  \mathrm{spec}(\Kmat)
+  = \bigl\{0^{(4)},\; 6^{(2)},\; 8^{(3)},\;
+            10^{(2)},\; 28^{(1)}\bigr\}.
+\]
+The four zero eigenvalues span the flat-connection space
+$\ker(\Mmat^\top)$ (see \cref{prop:flat});
+the eight non-zero eigenvalues describe the curvature degrees
+of freedom.
+$\rank(\Mmat)=8$; $\Tr(\Kmat)=84=4\times21$.
+\end{proposition}
+
+\begin{proof}
+Direct diagonalisation of the $12\times12$ integer matrix $\Kmat$
+computed from the enumerated incidence matrix.
+The explicit matrix structure is described in
+Appendix~\ref{app:Kmat}.
+All eigenvalues are integers because $\Kmat$ is an integer
+symmetric matrix.
+\qed
+\end{proof}
+
+\subsection{Flat Connections and the Null Space of the Laplacian}
+ 
+\begin{proposition}[Flat-Connection Space]\label{prop:flat}
+The plaquette Laplacian $\Kmat = \Mmat\Mmat^\top$ has a
+four-dimensional null space:
+\[
+  \ker(\Kmat) \;=\; \ker(\Mmat^\top)
+  \;=\; \bigl\{\theta\in\R^{12} :
+  \textstyle\sum_{l\in p}\theta_l = 0
+  \;\text{for every plaquette } p\bigr\}.
+\]
+Elements of $\ker(\Mmat^\top)$ are \emph{flat connections}:
+link-variable assignments with vanishing holonomy on every
+plaquette.
+All four independent flat directions are antipodally antisymmetric:
+each satisfies $\theta_{L_f} = -\theta_{-L_f}$ for every antipodal
+pair $(L_f, -L_f)$.
+The constant assignment $\theta_l = c$ for all $l$ is \emph{not} flat:
+it gives holonomy $4$ on every plaquette and is instead an eigenvector
+of $\Kmat$ with eigenvalue $28$ (see \cref{prop:quadratic}).
+\end{proposition}
+ 
+\begin{proof}
+$\ker(\Mmat\Mmat^\top) = \ker(\Mmat^\top)$ because $\Mmat$ has
+real entries: $\Mmat\Mmat^\top\theta = 0$ implies
+$\theta^\top\Mmat\Mmat^\top\theta = \|\Mmat^\top\theta\|^2 = 0$,
+hence $\Mmat^\top\theta = 0$.
+The four zero eigenvalues of $\Kmat$
+(\cref{prop:spectrum}) give $\dim\ker(\Mmat^\top) = 4$.
+Equivalently, $\rank(\Mmat) = 8$ and $\dim\ker(\Mmat^\top)
+= 12 - 8 = 4$.
+\qed
+\end{proof}
+ 
+\begin{remark}[Structure of the Flat-Connection
+Space]\label{rem:flat_structure}
+The four-dimensional null space $\ker(\Mmat^\top)$ over $\R$
+consists of link assignments $\theta$ satisfying the holonomy
+constraint $\sum_{l\in p}\theta_l = 0$ simultaneously on all
+21 plaquettes.
+All four independent flat modes share an antipodal antisymmetry:
+each satisfies $\theta_{L_f} = -\theta_{-L_f}$ for every
+antipodal pair, so future and past links carry opposite phases.
+This structure reflects the Lorentzian time-orientation of
+$\BdyCD$: the holonomy constraint forces the future and past
+contributions to cancel pairwise.
+
+The constant assignment $\theta_l = c$ does \emph{not} lie in
+$\ker(\Mmat^\top)$; it has holonomy $\sum_{l\in p} c = 4c \neq 0$
+on every plaquette (for $c\neq0$), confirming it is not a flat
+connection.
+Gauge fixing (removing the global phase freedom from the path
+integral) is therefore a constraint on the integration domain,
+not the removal of a zero eigenvalue.
+
+Over $\mathrm{GF}(2)$, the null space $\ker(\Mmat^\top\bmod 2)$
+has dimension $5 = 12 - 7$ (since
+$\rank(\Mmat)=7$ over $\mathrm{GF}(2)$ versus $8$ over $\R$;
+the gap arises from the ternary lattice structure, see
+Remark~\ref{rem:CW}).
+The $\mathrm{GF}(2)$ null space contains three weight-four vectors
+$\{l\in\LL : l_j\neq0\}$ for $j=1,2,3$, corresponding to the
+three spatial coordinate axes; these are flat modulo $2$ because
+each plaquette intersects each spatial axis in exactly two links,
+but they are \emph{not} flat over $\R$ (the holonomy is $2$,
+not $0$).
+\end{remark}
+ 
+\begin{remark}[CW-Complex Obstruction]\label{rem:CW}
+The $1$-skeleton of $\CD$ is a star graph: twelve edges sharing
+the single vertex $\bm{0}$.
+A star graph is a tree, so its first homology vanishes:
+$\ker(\partial_1) = \{0\}$.
+The chain-complex condition $\partial_1\circ\partial_2 = 0$
+then forces $\mathrm{im}(\partial_2) \subseteq \ker(\partial_1)
+= \{0\}$, requiring $\partial_2 = 0$.
+But $\rank(\Mmat) = 8 \neq 0$, so the incidence matrix $\Mmat$
+cannot serve as a topological boundary operator $\partial_2$ on
+this $1$-skeleton.
+Concretely, the Euler-characteristic identity
+$\chi = \sum(-1)^k\dim C_k = \sum(-1)^k b_k$ would require
+$13 - 12 + 21 = 22$ to equal $b_0 - b_1 + b_2$, which is
+inconsistent with the v2 claim $(b_0,b_1,b_2) = (1,4,13)$
+giving $\chi = 10 \neq 22$.
+ 
+The plaquette Laplacian $\Kmat = \Mmat\Mmat^\top$ and the
+flat-connection space $\ker(\Mmat^\top)$ are valid
+combinatorial/algebraic objects; their spectra and dimensions
+are exact and do not depend on a topological interpretation.
+The four-dimensional null space records the gauge-theoretic
+flat-connection count, not a Betti number.
+\end{remark}
+ 
+\begin{remark}[Extended Boundary Complex]\label{rem:extended}
+A valid CW complex can be constructed by replacing the star-graph
+$1$-skeleton with the boundary graph whose vertices are the twelve
+lightlike vectors and whose edges connect each future--past pair
+appearing together in a plaquette.
+With the natural alternating cyclic ordering
+$f_1\to p_1\to f_2\to p_2$ on each $2\FS+2\PS$ plaquette,
+this $1$-skeleton is the complete bipartite graph $K_{6,6}$
+(36 edges).
+The resulting CW complex has a valid chain complex
+$\partial_1\circ\partial_2 = 0$ with cell counts
+$|C_0|=12$, $|C_1|=36$, $|C_2|=21$, Betti numbers
+$(b_0,b_1,b_2)=(1,7,3)$, and Euler characteristic
+$\chi = 1 - 7 + 3 = -3 = 12 - 36 + 21$.
+This complex is noted for completeness; the algebraic results
+of the present paper (\cref{prop:spectrum,prop:flat}) do not
+require it.
+\end{remark}
+
+%------------------------------------------------------------------
+\section{\texorpdfstring{$U(1)$}{U(1)} Lattice BF Theory}
+\label{sec:BF}
+%------------------------------------------------------------------
+
+\begin{construction}[$U(1)$ Bulk BF Action]\label{con:BF}
+Assign phase $\theta_l\in[0,2\pi)$ to each link.
+The holonomy of plaquette $p=(l_1,l_2,l_3,l_4)$ is
+$\Theta_p = \theta_{l_1}+\theta_{l_2}+\theta_{l_3}+\theta_{l_4}
+\pmod{2\pi}$.
+The bulk action is
+$S_\mathrm{bulk}(\theta) = -\beta\sum_{p\in\Plaq}\cos(\Theta_p)$.
+\end{construction}
+
+\begin{ansatz}[Boundary Chern--Simons Term]\label{ans:bdy}
+\ANSATZ\;
+Label the six antipodal pairs
+$\mathcal{B} = \{(l_f^{(b)}, l_p^{(b)})\}_{b=1}^6$,
+with $l_p^{(b)} = -l_f^{(b)}$.
+We introduce the boundary action
+\[
+  S_\mathrm{bdy}(\theta)
+  = -\frac{\beta}{\Nloc+1}
+    \sum_{b=1}^6
+    \cos\!\bigl(\theta_{l_f^{(b)}} - \theta_{l_p^{(b)}}\bigr)
+  = -\frac{\beta}{13}
+    \sum_{b=1}^6
+    \cos\!\bigl(\theta_{l_f^{(b)}} - \theta_{l_p^{(b)}}\bigr).
+\]
+The sign convention $\theta_{l_f}-\theta_{l_p}$ reflects the
+Lorentzian orientation of \cref{thm:boundary}.
+The coupling $\beta/13 = \beta/(\Nloc+1)$ is chosen so that
+the boundary Laplacian $\Kmat_\mathrm{bdy}$ lifts exactly three
+bulk zero modes to eigenvalue $2/13$ (see \cref{prop:quadratic}).
+Heuristically, the denominator $\Nloc + 1 = 13$ distributes
+the coupling uniformly across the twelve boundary links and the
+single internal (observer) degree of freedom at the origin, so
+each of the thirteen lattice entities carries equal weight
+in the total action.
+This choice is not derived from gauge invariance or anomaly
+cancellation; deriving the correct coupling from an $\mathrm{SU}(2)$
+Plebanski formulation is Open Problem~O2 below.
+The full action is $S = S_\mathrm{bulk} + S_\mathrm{bdy}$.
+\end{ansatz}
+
+\subsection{Leading-Order Approximate Partition Function}
+
+\begin{proposition}[Character Expansion]\label{prop:character}
+Using $e^{\beta\cos\theta} = \sum_{n\in\Z} I_n(\beta)e^{in\theta}$
+(where $I_n$ decays rapidly for $|n|>1$ at moderate $\beta$),
+the partition function
+$\ZBF(\beta) = \int_{[0,2\pi)^{12}}\prod_l \frac{d\theta_l}{2\pi}
+e^{-S(\theta)}$
+satisfies
+\begin{equation}
+  \ZBF(\beta) = \sum_{\{n_p\}\in\Z^{21}}
+  \prod_{p\in\Plaq} I_{n_p}(\beta)\cdot
+  \prod_{l=0}^{11}
+  \delta\!\bigl(\textstyle\sum_{p\ni l} n_p,\,0\bigr).
+  \label{eq:Zchar}
+\end{equation}
+The Kronecker delta enforces Gauss's law for each link.
+Retaining only $|n_p|\leq1$ gives the leading-order approximation,
+justified by the rapid decay of $I_n(\beta)/I_0(\beta)$ for
+$|n|>1$.
+\end{proposition}
+
+\begin{proposition}[Finite-System Crossover]\label{prop:crossover}
+Within the leading-order character truncation of
+\cref{prop:character}, the finite-system specific heat
+$C(\beta) = \beta^2\,\partial^2(\log\ZBF)/\partial\beta^2$
+peaks at $\Cstar\approx 2.7364$ with value $C(\Cstar)\approx 12.69$.
+\end{proposition}
+
+\begin{proof}
+Truncating to $|n_p|\leq 1$, the zero-mode sector contributes
+$Z_0 = I_0(\beta)^{21}$.
+For the single-excitation sector, Gauss's law at each link requires
+that any excited pair $(n_p=+1, n_q=-1)$ satisfies $\Mmat_{:,p}\cdot\Mmat_{:,q}=0$
+(the two plaquettes share no link).
+Exhaustive enumeration of all $\binom{21}{2}=210$ plaquette pairs yields
+$N_\mathrm{compat}=60$ non-adjacent pairs (verified in Part~7 of the
+supplementary code).
+Each contributes $I_1(\beta)^2 I_0(\beta)^{19}$, with a factor of two
+for the sign choice, giving
+\[
+  \log \ZBF(\beta)
+  \;\approx\;
+  21\log I_0(\beta)
+  \;+\;
+  \log\!\bigl(1 + 120\,\bigl(I_1(\beta)/I_0(\beta)\bigr)^2\bigr).
+\]
+Numerical differentiation of this expression locates the specific-heat
+peak at $\Cstar\approx 2.7364$ with $C(\Cstar)\approx 12.69$.
+The computation is reproduced in Part~7 of the supplementary file
+\texttt{experiment\_verification\_ID\_paper.py}.
+\qed
+\end{proof}
+
+\begin{remark}[Finite-Size Caveat]\label{rem:finite}
+At $N=12$ links and $21$ plaquettes the configuration space
+is finite, so all thermodynamic functions are analytic in $\beta$
+and no true phase transition occurs.
+The peak at $\Cstar\approx 2.7364$ is a finite-system crossover
+with width $\Delta\beta \approx 2/C(\Cstar) \approx 0.158$;
+higher Bessel modes ($|n_p|\geq2$) will shift the estimate.
+The result is stated for the $|n_p|\leq1$ truncation only.
+\end{remark}
+
+\subsection{Saddle-Point Expansion and Spectrum}
+
+\begin{proposition}[Quadratic Action and Spectrum]\label{prop:quadratic}
+Expanding around the ordered saddle $\theta_l = 0$ with small
+fluctuations $\phi_l$, the quadratic action is
+$S_\mathrm{quad} = (\beta/2)\,\bm{\phi}^\top\Kmat_\mathrm{total}
+\bm{\phi} + \mathcal{O}(\phi^4)$,
+where $\Kmat_\mathrm{total} = \Kmat_\mathrm{bulk} + \Kmat_\mathrm{bdy}$.
+ 
+Labelling links $0,\ldots,5$ as future and $6,\ldots,11$ as their
+antipodal past counterparts, the boundary Laplacian is the
+$12\times12$ block matrix
+\[
+  \Kmat_\mathrm{bdy}
+  = \frac{1}{13}
+  \begin{pmatrix} I_6 & -I_6 \\ -I_6 & I_6 \end{pmatrix},
+\]
+where $I_6$ is the $6\times6$ identity.
+This is the graph Laplacian of the six antipodal pairs, with
+coupling $1/13$: expanding $\cos(\theta_{l_f}-\theta_{l_p})
+\approx 1 - \tfrac{1}{2}(\theta_{l_f}-\theta_{l_p})^2$ gives
+a positive-semidefinite quadratic form whose matrix has
+$+1/13$ on the diagonal and $-1/13$ on the off-diagonal entry
+connecting each future--past pair.
+ 
+The four zero eigenvalues of $\Kmat_\mathrm{bulk}$ correspond
+to antisymmetric flat connections satisfying
+$\theta_{L_f} = -\theta_{-L_f}$ for every antipodal pair
+(see \cref{rem:flat_structure}).
+The boundary Laplacian $\Kmat_\mathrm{bdy}$ acts on these
+antisymmetric modes with eigenvalue $2/13$, lifting all four
+to that value.
+The two eigenvalue-$6$ modes of $\Kmat_\mathrm{bulk}$ are also
+antisymmetric and shift by $2/13$;
+the eigenvalue-$8$, $10$, and $28$ modes are symmetric
+($\theta_{L_f} = +\theta_{-L_f}$) and are annihilated by
+$\Kmat_\mathrm{bdy}$.
+The exact spectrum of $\Kmat_\mathrm{total}$ is therefore
+\[
+  \mathrm{spec}(\Kmat_\mathrm{total})
+  = \bigl\{(2/13)^{(4)},\; (6+2/13)^{(2)},\;
+            8^{(3)},\; 10^{(2)},\; 28^{(1)}\bigr\}.
+\]
+In particular, $\Kmat_\mathrm{total}$ has no zero eigenvalue:
+the global $U(1)$ mode (the all-ones vector) is an eigenvector
+of $\Kmat_\mathrm{bulk}$ with eigenvalue $28$
+(since each row of $\Kmat$ sums to $28$),
+not a zero mode.
+It is symmetric and therefore unaffected by $\Kmat_\mathrm{bdy}$.
+Gauge fixing removes the constant mode from the path integral,
+but this is a constraint on the integration domain, not a
+zero-eigenvalue removal.
+\end{proposition}
+
+%------------------------------------------------------------------
+\section{Discussion}\label{sec:discussion}
+%------------------------------------------------------------------
+
+\subsection{Summary}
+ 
+Five exact results have been established.
+Lemma~\ref{thm:12lightlike} and Proposition~\ref{prop:d4} are
+unconditional mathematical facts, verified by exhaustive finite
+enumeration.
+Theorem~\ref{thm:diamond} is a verification of five geometric
+conditions.
+Theorem~\ref{thm:boundary} is a discrete algebra result, valid
+under the constant-field assumption stated therein.
+Proposition~\ref{prop:spectrum} gives an exact integer eigenvalue
+spectrum; Proposition~\ref{prop:flat} identifies the four-dimensional
+null space of the plaquette Laplacian with the space of flat
+connections on $\CD$.
+The star-graph $1$-skeleton of $\CD$ prevents its plaquettes from
+being attached as topological $2$-cells, so the null-space dimension
+is a gauge-theoretic invariant rather than a Betti number
+(Remark~\ref{rem:CW}); an extended CW complex with the correct
+homological structure is noted in Remark~\ref{rem:extended}.
+Propositions~\ref{prop:character} and~\ref{prop:crossover} give
+leading-order approximate results, honestly labelled as such,
+with the finite-size caveat of Remark~\ref{rem:finite};
+the crossover value $\Cstar\approx 2.7364$ is now reproduced
+by explicit computation in Part~7 of the supplementary file.
+Ansatz~\ref{ans:bdy} introduces the boundary coupling as a
+motivated but underived choice.
+
+\subsection{Open Problems}
+
+\begin{description}[style=nextline]
+  \item[(O1) Continuum limit.]
+    Does the $U(1)$ BF theory on $\CD$ converge, under Wilsonian
+    renormalisation group flow, to a topological field theory in
+    the continuum?
+    The discrete boundary sum and plaquette spectrum derived here
+    are exact at lattice spacing $a = 1$.
+    In the limit $\lambda \gg a \to 0$, the finite-system crossover
+    at $\Cstar$ must sharpen into a genuine topological phase
+    transition for the invariants to acquire continuum significance.
+    Establishing this requires embedding the 12-link diamond
+    into a sequence of refined lattices and tracking the
+    renormalisation flow of both the bulk and boundary couplings.
+  \item[(O2) $\mathrm{SU}(2)$ upgrade and Plebanski constraint.]
+    Replacing $U(1)$ by $\mathrm{SU}(2)$ and imposing the
+    simplicity constraint $B^{IJ}=\ast(e^I\wedge e^J)$ on each
+    $2\FS+2\PS$ plaquette may yield a discrete model of
+    four-dimensional general relativity.
+    The boundary coupling (currently the ansatz $\beta/13$) should
+    emerge from this construction; deriving it is the central
+    remaining open problem.
+  \item[(O3) Topological entanglement entropy.]
+    Computing $\gamma=\log D$ from the $\mathrm{SU}(2)$ ground state
+    and identifying the Chern--Simons level $k^*$ such that $\gamma=1$
+    nat via the Kitaev--Preskill formula~\cite{KitaevPreskill2006}
+    are open.
+  \item[(O4) Lorentz symmetry restoration.]
+    Whether $B_4$ invariance at the lattice scale implies
+    $\mathrm{SO}(3,1)$ in the infrared, as observed in causal
+    dynamical triangulations~\cite{Ambjorn2004}, is open.
+    Dimension-4 Lorentz-violating operators require breaking the
+    Minkowski signature (itself $B_4$-invariant); unprotected
+    operators first appear at dimension 6, suppressed by $(a/L)^2$.
+  \item[(O5) Spectral dimension of the MERA graph.]
+    The ternary lattice supports a MERA tensor network with
+    coarse-graining base 3.
+    The spectral dimension of the resulting causal graph and its
+    relationship to conformal factors are left for future work.
+\end{description}
+
+%------------------------------------------------------------------
+\section*{Acknowledgements}
+%------------------------------------------------------------------
+
+The author thanks three anonymous reviewers whose detailed
+evaluations prompted the explicit listing of all 21 plaquettes,
+the finite-size caveat for the crossover, the distinction between
+$\CD$ and $\BdyCD$, the reframing of Theorem~\ref{thm:boundary}
+as a discrete boundary sum rather than an application of Stokes'
+theorem, and the explicit labelling of the boundary coupling as
+an ansatz.
+A subsequent review identified the CW-complex obstruction in the
+original Betti-number computation, leading to the corrected
+flat-connection analysis of v3 (Proposition~\ref{prop:flat} and
+Remark~\ref{rem:CW}).
+
+%------------------------------------------------------------------
+\begin{thebibliography}{99}
+
+\bibitem{Ambjorn2004}
+J.~Ambj\o{}rn, J.~Jurkiewicz and R.~Loll,
+Phys.\ Rev.\ Lett.\ \textbf{93} (2004) 131301.
+
+\bibitem{Bombelli1987}
+L.~Bombelli et al.,
+Phys.\ Rev.\ Lett.\ \textbf{59} (1987) 521.
+
+\bibitem{Henson2006}
+J.~Henson, in \emph{Approaches to Quantum Gravity},
+Cambridge University Press (2009).
+
+\bibitem{KitaevPreskill2006}
+A.~Kitaev and J.~Preskill,
+Phys.\ Rev.\ Lett.\ \textbf{96} (2006) 110404.
+
+\bibitem{Kogut1979}
+J.~B.~Kogut, Rev.\ Mod.\ Phys.\ \textbf{51} (1979) 659.
+
+\bibitem{Penrose1972}
+R.~Penrose, \emph{Techniques of Differential Topology in
+Relativity}, SIAM (1972).
+
+\bibitem{Perez2013}
+A.~Perez, Living Rev.\ Relat.\ \textbf{16} (2013) 3.
+
+\bibitem{Regge1961}
+T.~Regge, Nuovo Cimento \textbf{19} (1961) 558.
+
+\bibitem{SchuetteMaass1953}
+C.~Sch{\"u}tte and B.~L.~van der Waerden,
+Math.\ Ann.\ \textbf{125} (1953) 325.
+
+\bibitem{WaldGR}
+R.~M.~Wald, \emph{General Relativity},
+University of Chicago Press (1984).
+
+\bibitem{Wilson1974}
+K.~G.~Wilson, Phys.\ Rev.\ D \textbf{10} (1974) 2445.
+
+\end{thebibliography}
+
+%------------------------------------------------------------------
+\appendix
+%------------------------------------------------------------------
+
+\section{Explicit Enumeration of Lightlike Vectors}\label{app:enum}
+
+\noindent\textbf{Future null sheet} $\FS$ ($v_0=+1$):
+\[
+  (1,{-}1,0,0),\;(1,{+}1,0,0),\;(1,0,{-}1,0),\;
+  (1,0,{+}1,0),\;(1,0,0,{-}1),\;(1,0,0,{+}1).
+\]
+\textbf{Past null sheet} $\PS$ ($v_0=-1$):
+\[
+  ({-}1,{-}1,0,0),\;({-}1,{+}1,0,0),\;({-}1,0,{-}1,0),\;
+  ({-}1,0,{+}1,0),\;({-}1,0,0,{-}1),\;({-}1,0,0,{+}1).
+\]
+
+\section{Pairwise Spacelike Verification for $\FS$}\label{app:pairwise}
+
+For distinct $u,v\in\FS$: $(u-v)_0=0$ and at least one spatial
+component differs, so $\ssp(u-v)\geq2>0$. All 15 pairs verified.
+
+\section{Spanning of $\R^4$ by $\FS$}\label{app:span}
+
+Four vectors $w_1=(1,+1,0,0)$, $w_2=(1,-1,0,0)$,
+$w_3=(1,0,+1,0)$, $w_4=(1,0,0,+1)$ have $\det W = -2\neq0$;
+hence $\rank(W)=4$ and $\FS$ spans $\R^4$.
+
+\section{All 21 Order-4 Plaquettes}\label{app:plaquettes}
+
+Each row gives four lightlike vectors summing to $\bm{0}$.
+All plaquettes are of type $2\FS+2\PS$
+(two future, two past links).
+
+\begin{longtable}{cl}
+\toprule
+\# & Links $(v_1, v_2, v_3, v_4)$\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1  & $(1,-1,0,0),\;(1,+1,0,0),\;(-1,-1,0,0),\;(-1,+1,0,0)$\\
+2  & $(1,-1,0,0),\;(1,+1,0,0),\;(-1,0,-1,0),\;(-1,0,+1,0)$\\
+3  & $(1,-1,0,0),\;(1,+1,0,0),\;(-1,0,0,-1),\;(-1,0,0,+1)$\\
+4  & $(1,-1,0,0),\;(1,0,-1,0),\;(-1,+1,0,0),\;(-1,0,+1,0)$\\
+5  & $(1,-1,0,0),\;(1,0,+1,0),\;(-1,+1,0,0),\;(-1,0,-1,0)$\\
+6  & $(1,-1,0,0),\;(1,0,0,-1),\;(-1,+1,0,0),\;(-1,0,0,+1)$\\
+7  & $(1,-1,0,0),\;(1,0,0,+1),\;(-1,+1,0,0),\;(-1,0,0,-1)$\\
+8  & $(1,+1,0,0),\;(1,0,-1,0),\;(-1,-1,0,0),\;(-1,0,+1,0)$\\
+9  & $(1,+1,0,0),\;(1,0,+1,0),\;(-1,-1,0,0),\;(-1,0,-1,0)$\\
+10 & $(1,+1,0,0),\;(1,0,0,-1),\;(-1,-1,0,0),\;(-1,0,0,+1)$\\
+11 & $(1,+1,0,0),\;(1,0,0,+1),\;(-1,-1,0,0),\;(-1,0,0,-1)$\\
+12 & $(1,0,-1,0),\;(1,0,+1,0),\;(-1,-1,0,0),\;(-1,+1,0,0)$\\
+13 & $(1,0,-1,0),\;(1,0,+1,0),\;(-1,0,0,-1),\;(-1,0,0,+1)$\\
+14 & $(1,0,-1,0),\;(1,0,0,-1),\;(-1,0,+1,0),\;(-1,0,0,+1)$\\
+15 & $(1,0,-1,0),\;(1,0,0,+1),\;(-1,0,+1,0),\;(-1,0,0,-1)$\\
+16 & $(1,0,+1,0),\;(1,0,0,-1),\;(-1,0,-1,0),\;(-1,0,0,+1)$\\
+17 & $(1,0,+1,0),\;(1,0,0,+1),\;(-1,0,-1,0),\;(-1,0,0,-1)$\\
+18 & $(1,0,0,-1),\;(1,0,0,+1),\;(-1,-1,0,0),\;(-1,+1,0,0)$\\
+19 & $(1,0,0,-1),\;(1,0,0,+1),\;(-1,0,-1,0),\;(-1,0,+1,0)$\\
+20 & $(1,0,-1,0),\;(1,0,+1,0),\;(-1,0,-1,0),\;(-1,0,+1,0)$\\
+21 & $(1,0,0,-1),\;(1,0,0,+1),\;(-1,0,0,-1),\;(-1,0,0,+1)$\\
+\end{longtable}
+
+\section{Structure of the Plaquette Laplacian}\label{app:Kmat}
+
+By the $2\FS+2\PS$ structure, every link participates in the
+same number of plaquettes, giving $\Kmat_{ll}=7$ for all $l$
+(since $\Tr(\Kmat)=84$ and there are 12 links).
+Off-diagonal entries $\Kmat_{ll'}$ count shared plaquettes,
+taking values in $\{0,1,2,3\}$.
+The full $12\times12$ integer matrix and the code used for its
+diagonalisation are available in the supplementary file
+\texttt{experiment\_verification\_ID\_paper.py} via the command
+\texttt{K = M @ M.T} where \texttt{M} is the $12\times21$
+incidence matrix computed from the plaquettes of
+Appendix~\ref{app:plaquettes}.
+The character-expansion computation of \cref{prop:crossover}
+(60 compatible plaquette pairs, specific-heat peak at
+$\Cstar\approx 2.7364$) is reproduced in Part~7 of the same file.
+
+\end{document}
