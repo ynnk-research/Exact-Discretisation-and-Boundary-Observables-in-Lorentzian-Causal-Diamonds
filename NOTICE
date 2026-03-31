@@ -2,7 +2,7 @@ Lorentzian Causal Diamond Verification Scripts
 
 This software implements and verifies the novel geometric and algebraic 
 concepts presented in the paper:
-> Yannick Schmitt. (2026). EMA-Gated Temporal Sequence Compression in Vision Transformers. Zenodo. https://doi.org/10.5281/zenodo.19338306
+> Yannick Schmitt. (2026). Exact Discretisation and Boundary Observables in Lorentzian Causal Diamonds. Zenodo. https://doi.org/10.5281/zenodo.19338306
 
 Specifically, this includes the numerical verification of:
 - The ternary Minkowski lattice L and lightlike vector enumeration.
