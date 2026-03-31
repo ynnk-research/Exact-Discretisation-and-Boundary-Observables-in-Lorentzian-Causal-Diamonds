@@ -72,8 +72,8 @@ python verification_ED_BO_CD_paper.py
 
 ## Related Papers
 
-- **Paper 2** (companion): *Algebraic Structure of the D4 Causal Diamond* — extends these results to symmetry group decomposition, CSS codes, mass renormalisation, and MOND phenomenology.
-- **Paper 3**: *A Lorentzian CSS Duality in Causal Diamond Quantum Error-Correcting Codes* — derives a four-code CSS family from the incidence matrix `M`.
+- **Paper 2**: *Algebraic Structure of the D4 Causal Diamond* — synthesises the geometry with symmetry group analysis, mass renormalisation, entanglement entropy, and MOND phenomenology. Yannick Schmitt. (2026). Zenodo. https://doi.org/10.5281/zenodo.19343721
+- **Paper 3**: *A Lorentzian CSS Duality in Causal Diamond Quantum Error-Correcting Codes* — derives the four-code CSS family in full, including No-Go theorems and circuit-level thresholds. Yannick Schmitt. (2026). Zenodo. https://doi.org/10.5281/zenodo.19343889
 
 
 ## Citation
