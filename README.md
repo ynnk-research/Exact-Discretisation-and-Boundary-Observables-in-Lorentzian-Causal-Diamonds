@@ -1,5 +1,5 @@
 # Exact Discretisation and Boundary Observables in Lorentzian Causal Diamonds
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19337577.svg)](https://doi.org/10.5281/zenodo.19338306) 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19338306.svg)](https://doi.org/10.5281/zenodo.19338306) 
 [![Code License: Apache 2.0](https://img.shields.io/badge/Code_License-Apache_2.0-blue.svg)](LICENSE)
 [![Doc License: CC BY 4.0](https://img.shields.io/badge/Doc_License-CC_BY_4.0-green.svg)](LICENSE-CC-BY.txt)
 
