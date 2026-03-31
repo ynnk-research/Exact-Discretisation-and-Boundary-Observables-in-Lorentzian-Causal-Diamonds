@@ -80,7 +80,7 @@ python verification_ED_BO_CD_paper.py
 
 If you use this work, please cite it as:
 
-> Yannick Schmitt. (2026). EMA-Gated Temporal Sequence Compression in Vision Transformers. Zenodo. https://doi.org/10.5281/zenodo.19338306
+> Yannick Schmitt. (2026). Exact Discretisation and Boundary Observables in Lorentzian Causal Diamonds. Zenodo. https://doi.org/10.5281/zenodo.19338306
 
 
 ## License
