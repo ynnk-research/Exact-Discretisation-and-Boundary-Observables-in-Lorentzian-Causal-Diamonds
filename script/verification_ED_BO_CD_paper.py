@@ -1,4 +1,4 @@
-# > Yannick Schmitt. (2026). EMA-Gated Temporal Sequence Compression in Vision Transformers. Zenodo. https://doi.org/10.5281/zenodo.19338306
+# > Yannick Schmitt. (2026). Exact Discretisation and Boundary Observables in Lorentzian Causal Diamonds. Zenodo. https://doi.org/10.5281/zenodo.19338306
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
